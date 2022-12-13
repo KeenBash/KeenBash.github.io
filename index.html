@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- 核心CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+
+    <!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+
+    <!-- 最好是在引入 Popper 之后再引入 Bootstrap 的 JS 文件 -->
+    <!-- bootstrap.min.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+        crossorigin="anonymous"></script>
+
+
+
+</head>
+
+<title>My Website</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <form class="bd-example">
+            <fieldset>
+                <legend>Example legend</legend>
+                <p>
+                    <label for="input">Example input</label>
+                    <input type="text" id="input" placeholder="Example input">
+                </p>
+                <p>
+                    <label for="select">Example select</label>
+                    <select id="select">
+                        <option value="">Choose...</option>
+                        <optgroup label="Option group 1">
+                            <option value="">Option 1</option>
+                            <option value="">Option 2</option>
+                            <option value="">Option 3</option>
+                        </optgroup>
+                        <optgroup label="Option group 2">
+                            <option value="">Option 4</option>
+                            <option value="">Option 5</option>
+                            <option value="">Option 6</option>
+                        </optgroup>
+                    </select>
+                </p>
+                <p>
+                    <label>
+                        <input type="checkbox" value="">
+                        Check this checkbox
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                        Option one is this and that
+                    </label>
+                    <label>
+                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                        Option two is something else that's also super long to demonstrate the wrapping of these fancy
+                        form controls.
+                    </label>
+                    <label>
+                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled="">
+                        Option three is disabled
+                    </label>
+                </p>
+                <p>
+                    <label for="textarea">Example textarea</label>
+                    <textarea id="textarea" rows="3"></textarea>
+                </p>
+                <p>
+                    <label for="date">Example date</label>
+                    <input type="date" id="date">
+                </p>
+                <p>
+                    <label for="time">Example time</label>
+                    <input type="time" id="time">
+                </p>
+                <p>
+                    <label for="output">Example output</label>
+                    <output name="result" id="output">100</output>
+                </p>
+                <p>
+                    <button type="submit">Button submit</button>
+                    <input type="submit" value="Input submit button">
+                    <input type="reset" value="Input reset button">
+                    <input type="button" value="Input button">
+                </p>
+                <p>
+                    <button type="submit" disabled="">Button submit</button>
+                    <input type="submit" value="Input submit button" disabled="">
+                    <input type="reset" value="Input reset button" disabled="">
+                    <input type="button" value="Input button" disabled="">
+                </p>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="container-fluid">
+        <style>
+            .bd-callout {
+                padding: 1.25rem;
+                margin-top: 1.25rem;
+                margin-bottom: 1.25rem;
+                border: 1px solid #eee;
+                border-left-width: .25rem;
+                border-radius: .25rem
+            }
+
+            .bd-callout-warning {
+                border-left-color: #f0ad4e
+            }
+        </style>
+        <div class="bd-callout bd-callout-warning">
+            <h5 id="conveying-meaning-to-assistive-technologies">Conveying meaning to assistive technologies</h5>
+            <p>Using color to add meaning only provides a visual indication, which will not be conveyed to users of
+                assistive technologies - such as screen readers. Ensure that information denoted by the color is either
+                obvious from the content itself (e.g. the visible text), or is included through alternative means, such
+                as
+                additional text hidden with the <code>.sr-only</code> class.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+
+
+    </div>
+
+
+</body>
+
+</html>
