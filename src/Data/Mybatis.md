@@ -182,6 +182,7 @@ public interface StudentMapper {
 > 但是有的时候你不得不使用 $ 符号，例如要传入列名或者表名的时候，这个时候必须要添加 @Param 注解，where子句则是 # 方式
 > 果在动态 SQL 中使用了参数作为变量，那么也需要 @Param 注解，即使你只有一个参数。
 
+```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
