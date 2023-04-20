@@ -1,0 +1,1 @@
+import{_ as t,Y as o,Z as n,$ as e}from"./framework-35f11a7f.js";const _={},s=e("p",null,"这是Jave Notebook",-1),c=e("p",null,"我的java学习笔记",-1),a=[s,c];function l(r,d){return o(),n("div",null,a)}const f=t(_,[["render",l],["__file","index.html.vue"]]);export{f as default};
