@@ -3,4 +3,4 @@ title: Ray
 icon: config
 ---
 
-功能详情...
+Feature details here.

@@ -1,9 +1,9 @@
 ---
-title: 指南
+title: Guide
 icon: creative
 ---
 
-## 功能亮点
+## Highlight Features
 
 ### Bar
 
