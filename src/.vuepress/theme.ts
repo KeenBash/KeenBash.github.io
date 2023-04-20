@@ -25,60 +25,30 @@ export default hopeTheme({
     "ReadingTime",
   ],
 
-  footer: "默认页脚",
-  displayFooter: true,
+  blog: {
+    intro: "https://github.com/KeenBash",
+    sidebarDisplay: "mobile",
+    medias: {
+      Bilibili: "https://space.bilibili.com/40726406",
+      Github: "https://github.com/KeenBash",
+      Blog: "https://docs.keeend.eu.org/",
+    },
+  },
 
   // page meta
   metaLocales: {
     editLink: "在 GitHub 上编辑此页",
   },
-  
+
+  footer: "© 2023 Java Notebook, Inc.",
+  displayFooter: true,
 
   plugins: {
-    // comment: {
-    //   // @ts-expect-error: You should generate and use your own comment service
-    //   provider: "Waline",
-    // },
+    blog: true,
+    copyright: true,
     mdEnhance: {
-      align: true,
-      attrs: true,
-      chart: true,
       codetabs: true,
-      demo: true,
-      echarts: true,
-      figure: true,
-      flowchart: true,
-      gfm: true,
       imgLazyload: true,
-      imgSize: true,
-      include: true,
-      katex: true,
-      mark: true,
-      mermaid: true,
-      playground: {
-        presets: ["ts", "vue"],
-      },
-      presentation: {
-        plugins: ["highlight", "math", "search", "notes", "zoom"],
-      },
-      stylize: [
-        {
-          matcher: "Recommended",
-          replacer: ({ tag }) => {
-            if (tag === "em")
-              return {
-                tag: "Badge",
-                attrs: { type: "tip" },
-                content: "Recommended",
-              };
-          },
-        },
-      ],
-      sub: true,
-      sup: true,
-      tabs: true,
-      vPre: true,
-      vuePlayground: true,
     },
   },
 });

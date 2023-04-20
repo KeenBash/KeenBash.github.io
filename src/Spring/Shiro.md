@@ -1,3 +1,10 @@
+---
+category:
+  - Spring
+tag:
+  - Shiro
+---
+
 # shiro
 
 [官方文档](https://shiro.apache.org/documentation.html)
@@ -311,4 +318,3 @@ public String manage() {
 ```
 
 ## 整合springboot
-

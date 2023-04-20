@@ -1,3 +1,10 @@
+---
+category:
+  - Spring
+tag:
+  - SpringSecurity
+---
+
 # SpringSecurity
 
 版本5.4.2

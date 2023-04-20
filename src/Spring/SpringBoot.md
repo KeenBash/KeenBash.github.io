@@ -1,3 +1,10 @@
+---
+category:
+  - Spring
+tag:
+  - SpringBoot
+---
+
 # SprinngBoot
 
 > 定时任务shedule

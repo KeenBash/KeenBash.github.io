@@ -1,3 +1,10 @@
+---
+category:
+  - Spring
+tag:
+  - SSM
+---
+
 # SSMTemplate配置实例介绍
 
 **更新**加入了整合shiro和thymeleaf，文件SSMTemplate-shiro-thymeleaf
