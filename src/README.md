@@ -1,5 +1,6 @@
 ---
 home: true
+lang: zh-CN
 icon: home
 title: Jave Notebook
 heroImage: /logo.svg

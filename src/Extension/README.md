@@ -11,3 +11,7 @@ category:
 - [BlogEx](BlogEx.md)
 - [heima-redis](heima-redis.md)
 - [Sara-Github](Sara-Github.md)
+- mark
+  - [IdeaShortcut](mark/IdeaShortcut.md)
+  - [MarkDownTemplate](mark/MarkDownTemplate.md)
+  - [VscodeShortcut](mark/VscodeShortcut.md)

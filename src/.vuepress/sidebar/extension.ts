@@ -27,5 +27,15 @@ export const extension = [
       text: "Sara-Github",
       link: "Sara-Github",
     },
+    {
+      text: "备忘",
+      prefix: "mark/",
+      collapsible: true,
+      children: [
+        "IdeaShortcut",
+        "MarkDownTemplate",
+        "VscodeShortcut",
+      ]
+    },
   
   ];

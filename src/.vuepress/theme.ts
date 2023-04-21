@@ -44,10 +44,15 @@ export default hopeTheme({
   displayFooter: true,
 
   plugins: {
+    comment: {
+      provider: "Waline",
+      serverURL: "https://6d3zuh4g.api.lncldglobal.com",
+      
+    },
     blog: true,
     copyright: true,
     mdEnhance: {
-      codetabs: true,
+      katex: true,
       imgLazyload: true,
     },
   },
