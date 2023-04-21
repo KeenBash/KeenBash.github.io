@@ -47,8 +47,8 @@ Vscode代码提示键 `ctrl + 空格`
 
 ### 代码提示
 
-在路径修改了简化了默认提示
-F:\Microsoft VS Code\resources\app\extensions\markdown-basics\snippets\markdown.code-snippets
+在路径修改了简化了默认提示  
+`F:\Microsoft VS Code\resources\app\extensions\markdown-basics\snippets\markdown.code-snippets`
 
 单行代码 `code`
 
@@ -126,11 +126,11 @@ _你也 **组合** 这些符号_
 
 原生方式
 
-![可莉](images/d2bd0aae1ffc78d105be6ae255b543f191c0b54ba116669c3b06bdec4cd482e4.jpg)
+![可莉](https://s2.loli.net/2022/12/01/o9HvUtPspRJa4Db.jpg)
 
 html方式，可以调整大小和居中方式
 
-<img src="images/d2bd0aae1ffc78d105be6ae255b543f191c0b54ba116669c3b06bdec4cd482e4.jpg" width = "300" alt="可莉" align=center />
+<img src="https://s2.loli.net/2022/12/01/o9HvUtPspRJa4Db.jpg" width = "300" alt="可莉" align=center />
 
 ### 链接
 
