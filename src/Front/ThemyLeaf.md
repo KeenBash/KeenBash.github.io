@@ -101,6 +101,8 @@ ${#strings.equals('编程',name)}
 
 #### 表达式@
 
+引用url
+
 ### 行内写法
 
 直接在标签内写[[${xxx}]]
@@ -112,6 +114,7 @@ ${#strings.equals('编程',name)}
 |th:id|替换 HTML 的 id 属性|`<input  id="html-id"  th:id="thymeleaf-id"/>`|
 |th:text|文本替换，转义特殊字符|`<h1 th:text="hello，bianchengbang" >hello</h1>`|
 |th:utext|文本替换，不转义特殊字符|`<div th:utext="'<h1>欢迎来到编程帮！</h1>'" >欢迎你</div>`|
+|th:attr|设置html元素属性|`<img th:attr="src=@{/1.png},title=${user.username},alt=${user.username}">`|
 
 `th:each`用法
 

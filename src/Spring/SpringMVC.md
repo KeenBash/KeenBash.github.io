@@ -54,6 +54,7 @@ tag:
     - [FlashMap](#flashmap)
     - [PathPattern](#pathpattern)
     - [参数、响应预处理](#参数响应预处理)
+      - [cors跨域问题](#cors跨域问题)
 
 ## 配置MVC环境
 
@@ -869,3 +870,26 @@ public class WebConfig implements WebMvcConfigurer {
 
 SpringMVC 中给我们提供了 ResponseBodyAdvice 和 RequestBodyAdvice，利用这两个工具可以对请求和响应进行预处理，非常方便。
 
+#### cors跨域问题
+
+首先可以通过 @CrossOrigin 注解配置某一个controller方法接受某一个域的请求
+
+全局配置只需要在 SpringMVC 的配置类中重写 addCorsMappings 方法即可
+
+```java
+@Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
+    
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+        .allowedOrigins("http://localhost:8081")
+        .allowedMethods("*")
+        .allowedHeaders("*");
+    }
+}
+```
+
+常见的就是 CSRF（Cross-site request forgery）跨站请求伪造
+
+基于此，浏览器在实际操作中，会对请求进行分类，分为简单请求，预先请求，带凭证的请求等，预先请求会首先发送一个 options 探测请求，和浏览器进行协商是否接受请求。默认情况下跨域请求是不需要凭证的，但是服务端可以配置要求客户端提供凭证，这样就可以有效避免 csrf 攻击。

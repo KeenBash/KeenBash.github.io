@@ -5,15 +5,16 @@ tag:
   - SpringBoot
 ---
 
-# SprinngBoot
+# SpringBoot
 
 > 定时任务shedule
 > 7.18. Sending Email
 
 [SpringBoot](https://spring.io/projects/spring-boot#learn)
 
-- [SprinngBoot](#sprinngboot)
+- [SpringBoot](#springboot)
   - [HelloSpringBoot](#hellospringboot)
+    - [项目构建](#项目构建)
     - [SpringBoot特点](#springboot特点)
       - [依赖管理](#依赖管理)
       - [自动配置](#自动配置)
@@ -50,6 +51,7 @@ tag:
     - [参数校验](#参数校验)
       - [对于传输对象校验](#对于传输对象校验)
       - [对于请求参数校验](#对于请求参数校验)
+      - [全局数据绑定](#全局数据绑定)
       - [统一异常处理](#统一异常处理)
       - [分组校验](#分组校验)
       - [嵌套校验](#嵌套校验)
@@ -58,8 +60,13 @@ tag:
       - [自定义 message](#自定义-message)
       - [编程式校验](#编程式校验)
       - [快速失败](#快速失败)
-  - [Spring异步任务@Async](#spring异步任务async)
-  - [监听器](#监听器)
+  - [Spring任务](#spring任务)
+    - [启动和销毁](#启动和销毁)
+    - [定时任务](#定时任务)
+      - [@Scheduled](#scheduled)
+      - [Quartz](#quartz)
+      - [可视化任务管理-动态任务](#可视化任务管理-动态任务)
+    - [Spring异步任务@Async](#spring异步任务async)
   - [数据访问](#数据访问)
     - [自定义使用Druid数据源](#自定义使用druid数据源)
     - [整合mybatis](#整合mybatis)
@@ -67,6 +74,10 @@ tag:
     - [redis](#redis)
     - [JUnit 5](#junit-5)
   - [SpringBoot Actuator指标监控](#springboot-actuator指标监控)
+  - [Swagger2](#swagger2)
+    - [Swagger2 配置](#swagger2-配置)
+    - [创建接口](#创建接口)
+  - [日志管理](#日志管理)
   - [profile](#profile)
     - [外部化配置](#外部化配置)
   - [自定义starter](#自定义starter)
@@ -147,6 +158,15 @@ server.port=8888
 - cmd快速编辑模式（不过应该都是部署在linux上啊）
 
 fat jar
+
+### 项目构建
+
+- 使用<https://start.spring.io/>构建springboot项目包，存在访问不稳定构建失败等问题
+- 使用<https://start.aliyun.com/>构建springboot项目包，版本不是特别新
+- 使用 Spring Boot 中文社区搭建的 <https://start.springboot.io/>
+- Maven 手动构建
+
+> 可以先构建然后修改parent版本
 
 ### SpringBoot特点
 
@@ -1397,6 +1417,29 @@ Post请求的 @RequestBody DTO对象，DTO对象字段上标注校验注解
 
 校验失败抛出的是ConstraintViolationException
 
+#### 全局数据绑定
+
+我们可以将一些公共的数据定义在添加了 @ControllerAdvice 注解的类中，这样，在每一个 Controller 的接口中，就都能够访问导致这些数据。
+
+```java
+@ControllerAdvice
+public class MyGlobalExceptionHandler {
+
+    @ModelAttribute(name = "md")
+    public Map<String,Object> mydata() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("age", 99);
+        map.put("gender", "男");
+        return map;
+    }
+}
+```
+
+使用 @ModelAttribute 注解标记该方法的返回数据是一个全局数据，默认情况下，这个全局数据的 key 就是返回的变量名，value 就是方法返回值，当然开发者可以通过 @ModelAttribute 注解的 name 属性去重新指定 key。
+
+> 如果接收两个对象，存在属性字段名相同的情况无法绑定？
+> 前端直接传递
+
 #### 统一异常处理
 
 ```java
@@ -1677,11 +1720,162 @@ maven多环境打包隔离
 
 ![图 1](https://s2.loli.net/2023/01/05/yIGYCt8qnPkON1d.png)  
 
-## Spring异步任务@Async
+## Spring任务
 
-定时任务
+### 启动和销毁
 
-## 监听器
+Spring Boot 中针对系统启动任务提供了两种解决方案，分别是 CommandLineRunner 和 ApplicationRunner
+
+```java
+@Component
+@Order(100)
+public class MyCommandLineRunner1 implements CommandLineRunner {
+    @Override
+    public void run(String... args) throws Exception {
+        // 参数来自项目启动
+    }
+}
+```
+
+ApplicationRunner 和 CommandLineRunner 功能一致，用法也基本一致，唯一的区别主要体现在对参数的处理上，ApplicationRunner 可以接收更多类型的参数
+
+```java
+@Component
+@Order(98)
+public class MyApplicationRunner1 implements ApplicationRunner {
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        // 获取非kv参数
+        List<String> nonOptionArgs = args.getNonOptionArgs();
+        System.out.println("MyApplicationRunner1>>>"+nonOptionArgs);
+        // 获取key集合
+        Set<String> optionNames = args.getOptionNames();
+        for (String key : optionNames) {
+            // 根据key获取value
+            System.out.println("MyApplicationRunner1>>>"+key + ":" + args.getOptionValues(key));
+        }
+        // 获取所有参数
+        String[] sourceArgs = args.getSourceArgs();
+        System.out.println("MyApplicationRunner1>>>"+Arrays.toString(sourceArgs));
+    }
+}
+```
+
+### 定时任务
+
+#### @Scheduled
+
+项目创建成功后，添加 @EnableScheduling 注解，开启定时任务
+
+首先使用 @Scheduled 注解开启一个定时任务。使用 cron 表达式，可以非常丰富的描述定时任务的时间。
+
+#### Quartz
+
+项目创建完成后，也需要添加开启定时任务的注解 @EnableScheduling
+
+Quartz 在使用过程中，有两个关键概念，一个是JobDetail（要做的事情），另一个是触发器（什么时候做），要定义 JobDetail，需要先定义 Job，Job 的定义有两种方式：
+
+第一种方式，直接定义一个Bean：
+
+```java
+@Component
+public class MyJob1 {
+    public void sayHello() {
+        System.out.println("MyJob1>>>"+new Date());
+    }
+}
+```
+
+关于这种定义方式说两点：
+
+1. 首先将这个 Job 注册到 Spring 容器中。
+2. 这种定义方式有一个缺陷，就是无法传参。
+
+第二种定义方式，则是继承 QuartzJobBean 并实现默认的方法：
+
+```java
+public class MyJob2 extends QuartzJobBean {
+    HelloService helloService;
+    public HelloService getHelloService() {
+        return helloService;
+    }
+    public void setHelloService(HelloService helloService) {
+        this.helloService = helloService;
+    }
+    @Override
+    protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        helloService.sayHello();
+    }
+}
+public class HelloService {
+    public void sayHello() {
+        System.out.println("hello service >>>"+new Date());
+    }
+}
+```
+
+和第1种方式相比，这种方式支持传参，任务启动时，executeInternal 方法将会被执行。
+
+Job 有了之后，接下来创建类，配置 JobDetail 和 Trigger 触发器，如下：
+
+```java
+@Configuration
+public class QuartzConfig {
+    // JobDetail
+    @Bean
+    MethodInvokingJobDetailFactoryBean methodInvokingJobDetailFactoryBean() {
+        MethodInvokingJobDetailFactoryBean bean = new MethodInvokingJobDetailFactoryBean();
+        bean.setTargetBeanName("myJob1");
+        bean.setTargetMethod("sayHello");
+        return bean;
+    }
+    @Bean
+    JobDetailFactoryBean jobDetailFactoryBean() {
+        JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setJobClass(MyJob2.class);
+        JobDataMap map = new JobDataMap();
+        map.put("helloService", helloService());
+        bean.setJobDataMap(map);
+        return bean;
+    }
+    // Trigger
+    @Bean
+    SimpleTriggerFactoryBean simpleTriggerFactoryBean() {
+        SimpleTriggerFactoryBean bean = new SimpleTriggerFactoryBean();
+        bean.setStartTime(new Date());
+        bean.setRepeatCount(5);
+        bean.setJobDetail(methodInvokingJobDetailFactoryBean().getObject());
+        bean.setRepeatInterval(3000);
+        return bean;
+    }
+    @Bean
+    CronTriggerFactoryBean cronTrigger() {
+        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
+        bean.setCronExpression("0/10 * * * * ?");
+        bean.setJobDetail(jobDetailFactoryBean().getObject());
+        return bean;
+    }
+
+    @Bean
+    SchedulerFactoryBean schedulerFactoryBean() {
+        SchedulerFactoryBean bean = new SchedulerFactoryBean();
+        bean.setTriggers(cronTrigger().getObject(), simpleTriggerFactoryBean().getObject());
+        return bean;
+    }
+    @Bean
+    HelloService helloService() {
+        return new HelloService();
+    }
+}
+```
+
+JobDetail 的配置有两种方式：MethodInvokingJobDetailFactoryBean 和 JobDetailFactoryBean 。1.使用 MethodInvokingJobDetailFactoryBean 可以配置目标 Bean 的名字和目标方法的名字，这种方式不支持传参。2.使用 JobDetailFactoryBean 可以配置 JobDetail ，任务类继承自 QuartzJobBean ，这种方式支持传参，将参数封装在 JobDataMap 中进行传递。
+
+Trigger 是指触发器，Quartz 中定义了多个触发器，这里展示其中两种的用法，SimpleTrigger 和 CronTrigger 。SimpleTrigger 有点类似于前面说的 @Scheduled 的基本用法。CronTrigger 则有点类似于 @Scheduled 中 cron 表达式的用法。
+
+#### 可视化任务管理-动态任务
+
+### Spring异步任务@Async
 
 ## 数据访问
 
@@ -2085,6 +2279,95 @@ InfoContributor
 可视化界面admin server
 
 需要创建server端和client端
+
+## Swagger2
+
+### Swagger2 配置
+
+Swagger2 的配置也是比较容易的，在项目创建成功之后，只需要开发者自己提供一个 Docket 的 Bean 即可，如下：
+
+```java
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .pathMapping("/")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("org.javaboy.controller"))
+                .paths(PathSelectors.any())
+                .build().apiInfo(new ApiInfoBuilder()
+                        .title("SpringBoot整合Swagger")
+                        .description("SpringBoot整合Swagger，详细信息......")
+                        .version("9.0")
+                        .contact(new Contact("啊啊啊啊","blog.csdn.net","aaa@gmail.com"))
+                        .license("The Apache License")
+                        .licenseUrl("http://www.javaboy.org")
+                        .build());
+    }
+}
+```
+
+这里提供一个配置类，首先通过 @EnableSwagger2 注解启用 Swagger2 ，然后配置一个 Docket Bean，这个 Bean 中，配置映射路径和要扫描的接口的位置，在 apiInfo 中，主要配置一下 Swagger2 文档网站的信息，例如网站的 title，网站的描述，联系人的信息，使用的协议等等。
+
+### 创建接口
+
+```java
+@RestController
+@Api(tags = "用户管理相关接口")
+@RequestMapping("/user")
+public class UserController {
+    
+    @PostMapping("/")
+    @ApiOperation("添加用户的接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名", defaultValue = "李四"),
+            @ApiImplicitParam(name = "address", value = "用户地址", defaultValue = "深圳", required = true)
+    })
+    public RespBean addUser(String username, @RequestParam(required = true) String address) {
+        return new RespBean();
+    }
+    
+    @GetMapping("/")
+    @ApiOperation("根据id查询用户的接口")
+    @ApiImplicitParam(name = "id", value = "用户id", defaultValue = "99", required = true)
+    public User getUserById(@PathVariable Integer id) {
+        User user = new User();
+        user.setId(id);
+        return user;
+    }
+
+    @PutMapping("/{id}")
+    @ApiOperation("根据id更新用户的接口")
+    public User updateUserById(@RequestBody User user) {
+        return user;
+    }
+}
+```
+
+1. @Api 注解可以用来标记当前 Controller 的功能。
+2. @ApiOperation 注解用来标记一个方法的作用。
+3. @ApiImplicitParam 注解用来描述一个参数，可以配置参数的中文含义，也可以给参数设置默认值，这样在接口测试的时候可以避免手动输入。
+4. 如果有多个参数，则需要使用多个 @ApiImplicitParam 注解来描述，多个 @ApiImplicitParam 注解需要放在一个 @ApiImplicitParams 注解中。\
+5. 需要注意的是，@ApiImplicitParam 注解中虽然可以指定参数是必填的，但是却不能代替 @RequestParam(required = true) ，前者的必填只是在 Swagger2 框架内必填，抛弃了 Swagger2 ，这个限制就没用了，所以假如开发者需要指定一个参数必填， @RequestParam(required = true) 注解还是不能省略。
+6. 如果参数是一个对象（例如上文的更新接口），对于参数的描述也可以放在实体类中。例如下面一段代码：
+
+```java
+@ApiModel
+public class User {
+    @ApiModelProperty(value = "用户id")
+    private Integer id;
+    @ApiModelProperty(value = "用户名")
+    private String username;
+    @ApiModelProperty(value = "用户地址")
+    private String address;
+}
+```
+
+> 如果我们的 Spring Boot 项目中集成了 Spring Security，那么如果不做额外配置，Swagger2 文档可能会被拦截，此时只需要在 Spring Security 的配置类中重写 configure 方法，添加如下过滤即可
+
+## 日志管理
 
 ## profile
 
