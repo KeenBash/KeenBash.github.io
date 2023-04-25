@@ -46,7 +46,7 @@ export default hopeTheme({
   plugins: {
     comment: {
       provider: "Waline",
-      serverURL: "https://6d3zuh4g.api.lncldglobal.com",
+      serverURL: "https://waline.keeend.eu.org",
       
     },
     blog: true,
