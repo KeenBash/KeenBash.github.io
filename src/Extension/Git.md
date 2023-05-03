@@ -9,19 +9,26 @@ tag:
 
 [Git视频教程](https://www.bilibili.com/video/BV1vy4y1s7k6/)
 
-集中式版本控制(svn)，只由中央服务器管理版本
-
-分布式版本控制(git)，远程库管理提交，本地git clone同时获得版本信息，版本控制在本地
+[Git官方教程](https://git-scm.com/book/zh/v2)
 
 ## Git 工作机制
 
+- 版本控制系统（VCS）
+
+集中式版本控制(svn)，只由中央服务器管理版本。其它大部分系统以文件变更列表的方式存储信息，将它们存储的信息看作是一组基本文件和每个文件随时间逐步累积的差异 （它们通常称作 **基于差异（delta-based）** 的版本控制）。
+
+分布式版本控制(git)，远程库管理提交，本地git clone同时获得版本信息，版本控制在本地。Git 更像是把数据看作是对小型文件系统的一系列快照。 在 Git中，每当你提交更新或保存项目状态时，它基本上就会对当时的全部文件创建一个快照并保存这个快照的索引。为了效率，如果文件没有修改，Git 不再重新存储该文件，而是只保留一个链接指向之前存储的文件。 Git 对待数据更像是一个 **快照流**。
+
+Git 用以计算校验和的机制叫做 SHA-1 散列（hash，哈希）。
+
+- git init：初始化工作区
 - 工作区：存放代码的区域
 - git add：添加到暂存区
 - 暂存区：临时存储
 - git commit：提交本地库
 - 本地库：历史版本(.git)
 - git push：推送远程库
-- 远程库：
+- 远程库：代码托管
 
 代码托管中心
 
@@ -31,9 +38,26 @@ tag:
 - 局域网
   - Gitlab
 
+可以通过以下命令查看所有的配置以及它们所在的文件：
+
+```text
+#$ git config --list
+$ git config --list --show-origin 
+...
+file:F:/Git/etc/gitconfig       init.defaultbranch=master
+file:C:/Users/KEEN/.gitconfig   user.name=XuChangeShine
+file:C:/Users/KEEN/.gitconfig   user.email=XuChangeShine@163.com
+file:C:/Users/KEEN/.gitconfig   http.sslverify=false
+file:C:/Users/KEEN/.gitconfig   http.postbuffer=524288000
+...
+```
+
+重复的变量名，这种情况下，Git 会使用它找到的每一个变量的最后一个配置。
+
 ## 基础指令
 
 ```text
+$ git help
 #初始化工作区  
 start a working area (see also: git help tutorial)
   clone     Clone a repository into a new directory
@@ -97,7 +121,6 @@ vim指令
 ### 常用指令
 
 - 初始化本地库 `git init`
-
 - 查看本地库状态 `git status`
 
 ```text
@@ -110,6 +133,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 ```
 
 - 添加文件到暂存区 `git add file/*`
+- 对已暂存文件与最后一次提交的文件差异 `git diff --staged`
 
 ```text
 $ git add hello.txt
@@ -118,13 +142,14 @@ The file will have its original line endings in your working directory
 
 $ git status
 Changes to be committed:
-  (use "git rm --cached <file>..." to unstage)
+  (use "git rm --cached <file>..." to unstage) #删除暂存某个文件new file
         new file:   hello.txt
 ```
 
 - 删除暂存区文件 `git rm --cached file`
-
 - 提交本地库 `git commit -m "version log"`
+
+Git 提供了一个跳过使用暂存区域的方式， 只要在提交的时候，给 git commit 加上 -a 选项，Git 就会自动把所有**已经跟踪过**的文件暂存起来一并提交，从而跳过 git add 步骤。
 
 ```text
 #提交版本号，完整版本号前七位
@@ -146,11 +171,14 @@ Date:   Thu Apr 27 11:32:59 2023 +0800
 ```text
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed) #暂存新版
-  (use "git restore <file>..." to discard changes in working directory) #恢复之前版本
+  (use "git restore <file>..." to discard changes in working directory) #恢复之前版本，会丢弃这次修改
         modified:   hello.txt
+#取消暂存某个文件（和前面git rm一样效果）
+git reset HEAD <file>
+git restore --staged <file>
 ```
 
-- 版本重设 `git reset -- hard 版本号id`
+- 版本重设 `git reset --hard 版本号id`
 
 ```text
 $ git reflog
@@ -162,9 +190,9 @@ $ git reflog
 
 reset会修改HEAD的指向，但不会创建新的分支
 
---soft  – 缓存区和工作目录都不会被改变  
---mixed – 默认选项。缓存区和你指定的提交同步，但工作目录不受影响  
---hard  – 缓存区和工作目录都同步到你指定的提交  
+--soft  – 暂存区和工作目录都不会被改变  
+--mixed – 默认选项。暂存区和你指定的提交同步，但工作目录不受影响  
+--hard  – 暂存区和工作目录都同步到你指定的提交  
 
 一旦reset HEAD~xxx，HEAD就会指向历史commit，之后的commit其实还在，但看不到了
 
@@ -173,6 +201,16 @@ reset会修改HEAD的指向，但不会创建新的分支
 重设后还能回到比 指定版本 新的 当前版本吗？可以
 
 使用git reflog查看日志再git reset
+
+### extension
+
+- git rm
+- git mv
+- git commit --amend修补提交
+- git tag 标签
+- git rebase 变基  
+可以使用 rebase 命令将提交到某一分支上的所有修改都移至另一分支上  
+- git pick-cherry 优选基
 
 ## 分支branch
 
@@ -223,6 +261,8 @@ fatal: cannot do a partial commit during a merge.
 - fork 复刻代码到另一个远程库
 
 另一个远程库pull request原远程库，审核再合并
+
+可以通过 `git remote show <alas>` 看到更多的信息，它会列出远程仓库的 URL 与跟踪分支的信息。
 
 ### Github
 
@@ -311,8 +351,10 @@ checkout切换分支
 
 ## 数据恢复大法
 
-- 回退版本
+- 回退版本git reset
 
 - 已经commit过的文件删除了 git status查看文件状态 git restore 文件名
 
-- 添加到暂存区的新文件删除了
+- 添加到暂存区的**新文件**手动删除了，提交也不会出现那个文件，但是切换分区重新会出现
+
+- 重命名一个文件，然后新建一个同名文件
