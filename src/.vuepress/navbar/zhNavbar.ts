@@ -7,4 +7,5 @@ export const zhNavbar = navbar([
   { text: "拓展", link: "/Extension/" },
   { text: "数据库", link: "/Data/" },
   { text: "前端", link: "/Front/" },
+  { text: "面试", link: "/Interview/" },
 ]);
