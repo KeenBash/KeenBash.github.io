@@ -44,5 +44,11 @@ export const zhSidebar = sidebar({
       collapsible: true,
       children: "structure",
     },
+    {
+      text: "面试",
+      prefix: "Interview/",
+      collapsible: true,
+      children: "structure",
+    },
   ],
 });
