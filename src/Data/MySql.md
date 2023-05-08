@@ -122,9 +122,9 @@ MySQL 5.5.5 之前，MyISAM 是 MySQL 的默认存储引擎。5.5.5 版本之后
 
 - InnoDB: 事务、外键、行级锁（支持聚集索引）
 
-存储文件结构
-.ibd，表结构、数据和索引
-.frm 表结构的文件（mysql8中废弃，表结构合并在.ibd文件中）。
+存储文件结构  
+.ibd，表结构、数据和索引  
+.frm 表结构的文件（mysql8中废弃，表结构合并在.ibd文件中）。  
 
 ibd2sdi，可以将ibd文件中的冗余存储的sdi信息提取出来，并以json的格式输出到终端
 
@@ -136,10 +136,10 @@ TableSpace(表空间) --> Segment(段) --> Extent(区 1M) --> Page(页 16K) -- R
 
 最大的问题就是异常崩溃后无法安全恢复数据？innoDB有 redo log
 
-存储文件结构
-.myd 表数据
-.myi 索引
-.frm 表结构的文件（mysql8中废弃，出现了新的.sdi（json）文件替代）
+存储文件结构  
+.myd 表数据  
+.myi 索引  
+.frm 表结构的文件（mysql8中废弃，出现了新的.sdi（json）文件替代）  
 
 适用场景：读和插入为主
 
