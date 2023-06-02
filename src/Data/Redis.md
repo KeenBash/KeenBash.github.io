@@ -57,9 +57,9 @@ jemalloc缺失make MALLOC=libc
 
 [Redis？它主要用来什么的](https://blog.csdn.net/u014723137/article/details/125658176)
 
-[安装到ubuntu](https://blog.csdn.net/m0_54850825/article/details/126540414)
-
 [Ubuntu安装redis后redis.conf配置为空](https://blog.csdn.net/weixin_43097301/article/details/89366196)
+
+[设置开机自动启动](https://zhuanlan.zhihu.com/p/584622091)
 
 在ubuntu里使用命令apt install redis安装
 

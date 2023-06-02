@@ -19,6 +19,8 @@ Ubuntu的mysql密码：12345678
 
 借助navicat保存sql文件转储数据库
 
+useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+
 ```properties
 spring.datasource.url=jdbc:mysql://192.168.73.130:3306/security_test
 spring.datasource.username=root
@@ -93,7 +95,7 @@ utf8mb3与utf8mb4
 事务的隔离级别
 
 - 读未提交 read uncommitted
-- 读已提交 ream committed
+- 读已提交 read committed
 - 可重复读 repeatable read
 - 串行化 serializable
 

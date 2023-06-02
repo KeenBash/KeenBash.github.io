@@ -2,10 +2,10 @@
 home: true
 lang: zh-CN
 icon: home
-title: Jave Notebook
-heroImage: /logo.svg
-heroText: Jave Notebook
-tagline: Jave Notebook 我的java学习笔记。
+title: 云聲笔记
+heroImage: /logos.png
+heroText: 云聲笔记
+tagline: 云聲笔记 java学习笔记。
 
 features:
   - title: JavaSE
@@ -33,9 +33,9 @@ features:
     link: /Interview/
 
 copyright: false
-footer: © 2023 Java Notebook, Inc.
+footer: © 2023 云聲笔记
 ---
 
-这是Jave Notebook
+这里是云聲笔记
 
-我的java学习笔记
+java学习笔记

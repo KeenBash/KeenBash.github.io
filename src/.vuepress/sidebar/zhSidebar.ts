@@ -4,6 +4,7 @@ import { spring } from "./spring"
 import { extension } from "./extension"
 import { data } from "./data"
 import { front } from "./front"
+import { interview } from "./interview"
 
 
 export const zhSidebar = sidebar({
@@ -12,6 +13,7 @@ export const zhSidebar = sidebar({
   "/Extension/": extension,
   "/Data/": data,
   "/Front/": front,
+  "/Interview": interview,
   "/": [
     "",
     {

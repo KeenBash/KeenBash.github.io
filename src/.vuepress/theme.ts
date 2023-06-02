@@ -44,11 +44,10 @@ export default hopeTheme({
   displayFooter: true,
 
   plugins: {
-    comment: {
-      provider: "Waline",
-      serverURL: "https://waline.keeend.eu.org",
-      
-    },
+    // comment: {
+    //   provider: "Waline",
+    //   serverURL: "https://waline.keeend.eu.org",
+    // },
     blog: true,
     copyright: true,
     mdEnhance: {

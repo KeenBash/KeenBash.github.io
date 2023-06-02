@@ -9,6 +9,7 @@ tag:
 
 > 定时任务shedule
 > 7.18. Sending Email
+> 异步任务async
 
 [SpringBoot](https://spring.io/projects/spring-boot#learn)
 
