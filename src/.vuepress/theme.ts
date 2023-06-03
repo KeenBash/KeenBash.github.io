@@ -9,7 +9,7 @@ export default hopeTheme({
     url: "https://docs.keeend.eu.org/",
   },
   iconAssets: "iconfont",
-  logo: "/logo.svg",
+  logo: "/logos.png",
   repo: "KeenBash/KeenBash.github.io",
   docsDir: "src",
 
@@ -40,7 +40,7 @@ export default hopeTheme({
     editLink: "在 GitHub 上编辑此页",
   },
 
-  footer: "© 2023 Java Notebook, Inc.",
+  footer: "© 2023 云聲笔记",
   displayFooter: true,
 
   plugins: {

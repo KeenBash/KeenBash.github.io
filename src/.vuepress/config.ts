@@ -8,8 +8,8 @@ export default defineUserConfig({
   locales: {
     "/": {
       lang: "zh-CN",
-      title: "Jave Notebook",
-      description: "Jave Notebook 我的java学习笔记",
+      title: "云聲笔记",
+      description: "云聲笔记 java学习笔记",
     },
   },
 
